@@ -1,0 +1,1884 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="『数据结构』树, 北冥有鱼">
+    <meta name="description" content="
+
+
+1. 概念
+2. 二叉查找树
+2.1. 随机构造的二叉查找树
+2.2. 平均结点深度
+2.3. 不同的二叉树数目(Catalan num)
+2.4. 好括号列
+
+
+3. 基数树(radixTree)
+4. 字典树(trie)
+4.1.">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>『数据结构』树 | 北冥有鱼</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <!-- <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">北冥有鱼</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">北冥有鱼</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/ronghao233" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/ronghao233" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header> -->
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light" id="fixFontSizeToTitle">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">北冥有鱼</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/ronghao233" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/ronghao233" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+<script>
+    let width=document.documentElement.clientWidth;
+    let html_title=''
+    if (width<500){
+        html_title='<span class="logo-span" style="font-size: 1.2rem;">北冥有鱼</span>';
+    }else{
+        html_title='<span class="logo-span">北冥有鱼</span>';
+    }
+    document.getElementById("fixFontSizeToTitle").insertAdjacentHTML("beforeEnd", html_title);
+</script>
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">『数据结构』树</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+                                <span class="chip bg-color">数据结构</span>
+                            </a>
+                        
+                            <a href="/tags/%E6%A0%91/">
+                                <span class="chip bg-color">树</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="post-category">
+                                数据结构与算法
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-03-21
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2023-03-21
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.7k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    17 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <!-- TOC -->
+
+<ul>
+<li><a href="#1-%E6%A6%82%E5%BF%B5">1. 概念</a></li>
+<li><a href="#2-%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91">2. 二叉查找树</a><ul>
+<li><a href="#21-%E9%9A%8F%E6%9C%BA%E6%9E%84%E9%80%A0%E7%9A%84%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91">2.1. 随机构造的二叉查找树</a></li>
+<li><a href="#22-%E5%B9%B3%E5%9D%87%E7%BB%93%E7%82%B9%E6%B7%B1%E5%BA%A6">2.2. 平均结点深度</a></li>
+<li><a href="#23-%E4%B8%8D%E5%90%8C%E7%9A%84%E4%BA%8C%E5%8F%89%E6%A0%91%E6%95%B0%E7%9B%AEcatalan-num">2.3. 不同的二叉树数目(Catalan num)</a></li>
+<li><a href="#24-%E5%A5%BD%E6%8B%AC%E5%8F%B7%E5%88%97">2.4. 好括号列</a><span id="more"></span></li>
+</ul>
+</li>
+<li><a href="#3-%E5%9F%BA%E6%95%B0%E6%A0%91radixtree">3. 基数树(radixTree)</a></li>
+<li><a href="#4-%E5%AD%97%E5%85%B8%E6%A0%91trie">4. 字典树(trie)</a><ul>
+<li><a href="#41-ac-%E8%87%AA%E5%8A%A8%E6%9C%BA">4.1. AC 自动机</a></li>
+</ul>
+</li>
+<li><a href="#5-%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91">5. 平衡二叉树</a><ul>
+<li><a href="#51-avl-tree">5.1. AVL Tree</a></li>
+<li><a href="#52-splaytree">5.2. splayTree</a><ul>
+<li><a href="#521-zig-step">5.2.1. Zig-step</a></li>
+<li><a href="#522-zig-zig-step">5.2.2. Zig-zig step</a></li>
+<li><a href="#523-zig-zag-step">5.2.3. Zig-zag step</a></li>
+</ul>
+</li>
+<li><a href="#53-read-black-tree">5.3. read-black Tree</a></li>
+<li><a href="#54-treap">5.4. treap</a></li>
+</ul>
+</li>
+<li><a href="#6-%E6%80%BB%E7%BB%93">6. 总结</a></li>
+<li><a href="#7-%E9%99%84%E4%BB%A3%E7%A0%81">7. 附代码</a><ul>
+<li><a href="#71-%E4%BA%8C%E5%8F%89%E6%A0%91binarytree">7.1. 二叉树(binaryTree)</a></li>
+<li><a href="#72-%E5%89%8D%E7%BC%80%E6%A0%91trie">7.2. 前缀树(Trie)</a></li>
+<li><a href="#73-%E8%B5%A2%E8%80%85%E6%A0%91winnertree">7.3. 赢者树(winnerTree)</a></li>
+<li><a href="#74-%E5%B7%A6%E6%96%9C%E5%A0%86">7.4. 左斜堆</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+
+<p><a id="markdown-1-概念" name="1-概念"></a></p>
+<h1 id="1-概念">1. 1. 概念</h1><ul>
+<li>双亲</li>
+<li>左右孩子</li>
+<li>左右子树</li>
+<li>森林</li>
+<li>结点,叶子,边,路径</li>
+<li>高度 h</li>
+<li>遍历(前中后层)</li>
+<li>结点数 n</li>
+</ul>
+<p><a id="markdown-2-二叉查找树" name="2-二叉查找树"></a></p>
+<h1 id="2-二叉查找树">2. 2. 二叉查找树</h1><p>又名排序二叉树,对于每个结点, 如果有,其左孩子不大于它,右孩子不小于它</p>
+<p>通过前序遍历或者后序遍历就可以得到有序序列(升序,降序)</p>
+<p>常用三种操作, 插入,删除,查找,时间复杂度是 <img src="https://latex.codecogs.com/gif.latex?O(h)"><br>h是树高, 但是由于插入,删除而导致树不平衡, 即可能 <img src="https://latex.codecogs.com/gif.latex?h%5Cgeqslant&space;%5Clfloor&space;logn&space;%5Crfloor"></p>
+<p><a id="markdown-21-随机构造的二叉查找树" name="21-随机构造的二叉查找树"></a></p>
+<h2 id="2-1-随机构造的二叉查找树">2.1. 2.1. 随机构造的二叉查找树</h2><p>下面可以证明,随机构造,即输入序列有 <img src="https://latex.codecogs.com/gif.latex?n!">中, 每种概率相同的情况下, 期望的树高 <img src="https://latex.codecogs.com/gif.latex?h=O(logn)"></p>
+<p>(直接搬运算法导论上面的啦&gt;_&lt;)<br><img src="https://upload-images.jianshu.io/upload_images/7130568-69c57614410f6abd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
+<p><a id="markdown-22-平均结点深度" name="22-平均结点深度"></a></p>
+<h2 id="2-2-平均结点深度">2.2. 2.2. 平均结点深度</h2><p>一个较 上面定理 弱的结论:</p>
+<blockquote>
+<p>一棵随机构造的二叉查找树,n 个结点的平均深度为 <img src="https://latex.codecogs.com/gif.latex?O(logn)"></p>
+</blockquote>
+<p>类似 RANDOMIZED-QUICKSORT 的证明过程, 因为快排 递归的过程就是一个递归 二叉树.<br>随机选择枢纽元就相当于这里的某个子树的根结点 在所有结点的大小随机排名, 如 i. 然后根结点将剩下的结点划分为左子树(i-1)个结点, 右子树(n-i)个结点.</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/7130568-6bf2b5a6d286adca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br><a id="markdown-23-不同的二叉树数目catalan-num" name="23-不同的二叉树数目catalan-num"></a></p>
+<h2 id="2-3-不同的二叉树数目-Catalan-num">2.3. 2.3. 不同的二叉树数目(Catalan num)</h2><p>给定<img src="https://latex.codecogs.com/gif.latex?%7B1,2,%5Cldots,n%7D">,组成二叉查找树的数目.<br>由上面的证明过程, 可以容易地分析得出, 任选第 i 个数作为根, 由于二叉查找树的性质, 其左子树<br>应该有 i-1个结点, 右子树有 n-i个结点.<br>如果记 n 个结点 的二叉查找树的数目为<img src="https://latex.codecogs.com/gif.latex?b_n"><br>则有递推公式<br><img src="https://latex.codecogs.com/gif.latex?&space;b_n=%5Cbegin%7Bcases%7D&space;1&space;&n=0&space;%5C&space;%5Csum_%7Bi=1%7D%5E%7Bn%7Db_%7Bi-1%7Db_%7Bn-i%7D&space;&&space;n%5Cgeqslant&space;1&space;%5Cend%7Bcases%7D&space;"><br>然后我们来看<code>&lt;&lt;算法导论&gt;&gt;</code>(p162,思考题12-4)上怎么求的吧( •̀ ω •́ )y<br>设生成函数<br><img src="https://latex.codecogs.com/gif.latex?B(x)=%5Csum_%7Bn=0%7D%5E%7B%5Cinfty%7Db_n&space;x%5En"><br>下面证明<img src="https://latex.codecogs.com/gif.latex?B(x)=xB(x)%5E2+1"><br>易得<img src="https://latex.codecogs.com/gif.latex?xB(x)%5E2=%5Csum_%7Bi=1%7D%5E%7B%5Cinfty%7D%5Csum_%7Bn=i%7D%5E%7B%5Cinfty%7Db_%7Bi-1%7Db_%7Bn-i%7Dx%5En"><br>对比<img src="https://latex.codecogs.com/gif.latex?B(x),&space;xB(x)%5E2+1">的 x 的各次系数,分别是 <img src="https://latex.codecogs.com/gif.latex?b_k,a_%7Bk%7D"><br>当 k&#x3D;0, <img src="https://latex.codecogs.com/gif.latex?a_k=1=b_k"><br>当 k&gt;0<br><img src="https://latex.codecogs.com/gif.latex?a_%7Bk%7D&space;=&space;%5Csum_%7Bi=1%7D%5E%7Bk%7Db_%7Bi-1%7Db_%7Bk-i%7D&space;=&space;b_k"><br>所以<img src="https://latex.codecogs.com/gif.latex?B(x)=xB(x)%5E2+1"><br>由此解得<br><img src="https://latex.codecogs.com/gif.latex?B(x)=%5Cfrac%7B1-%5Csqrt%7B1-4x%7D&space;%7D%7B2x%7D"><br>在点 x&#x3D;0 处,<br>用泰勒公式得<br><img src="https://latex.codecogs.com/gif.latex?&space;%5Cbegin%7Baligned%7D&space;%5Clim_%7Bx%5Cto&space;0%7D%5Csqrt%7B1-4x%7D&=1+%5Csum_%7Bn=1%7D%5E%7B%5Cinfty%7DC_n%5E%7B%5Cfrac%7B1%7D%7B2%7D%7D%7B(-4)%7D%5Enx%5En&space;%5C&space;&=1+%5Csum_%7Bn=1%7D%5E%7B%5Cinfty%7D%5Cfrac%7B(2n-3)!!%7B(-4x)%7D%5En%7D%7Bn!%7D&space;%5Cend%7Baligned%7D&space;"><br>所以对应系数<br><img src="https://latex.codecogs.com/gif.latex?&space;%5Cbegin%7Baligned%7D&space;b_n&=%5Cfrac%7B1%7D%7B2%7D%5Cfrac%7B4%5E%7Bn+1%7D(2n-1)!!%7D%7B2%5E%7Bn+1%7Dn!%7D&space;%5C&space;&=%5Cfrac%7BC_%7B2n%7D%5E%7Bn%7D%7D%7Bn+1%7D&space;%5Cend%7Baligned%7D&space;"><br>这个数叫做 <code>Catalan 数</code><br><a id="markdown-24-好括号列" name="24-好括号列"></a></p>
+<h2 id="2-4-好括号列">2.4. 2.4. 好括号列</h2><p>王树禾的<code>&lt;&lt;图论&gt;&gt;</code>(p42)上用另外的方法给出Catalan数, 并求出n结点 二叉查找数的个数</p>
+<p>首先定义好括号列,有:</p>
+<ul>
+<li>空列,即没有括号叫做好括号列</li>
+<li>若A,B都是好括号列, 则串联后 AB是好括号列</li>
+<li>若A是好括号列, 则 (A)是好括号列</li>
+</ul>
+<blockquote>
+<p>充要条件: 好括号列 <img src="https://latex.codecogs.com/gif.latex?%5CLongleftrightarrow"> 左右括号数相等, 且从左向右看, 看到的右括号数不超过左括号数</p>
+</blockquote>
+<blockquote>
+<p>定理: 由 n个左括号,n个右括号组成的好括号列个数为<img src="https://latex.codecogs.com/gif.latex?c(n)=%5Cfrac%7BC_%7B2n%7D%5E%7Bn%7D%7D%7Bn+1%7D"></p>
+</blockquote>
+<p>证明:<br>由 n左n右组成的括号列有 <img src="https://latex.codecogs.com/gif.latex?%5Cfrac%7B2n%7D%7Bn!n!%7D=C_%7B2n%7D%5E%7Bn%7D">个.<br> 设括号列<img src="https://latex.codecogs.com/gif.latex?a_1a_2%5Cldots&space;a_%7B2n%7D">为坏括号列,<br>由充要条件, 存在最小的 j, 使得<img src="https://latex.codecogs.com/gif.latex?a_1a_2%5Cldots&space;a_%7Bj%7D">中右括号比左括号多一个,<br>由于是最小的 j, 所以 <img src="https://latex.codecogs.com/gif.latex?a_j">为右括号, <img src="https://latex.codecogs.com/gif.latex?a_%7Bj+1%7D">为右括号<br>把<img src="https://latex.codecogs.com/gif.latex?a_%7Bj+1%7Da_%7Bj+2%7D%5Cldots&space;a_%7B2n%7D">中的左括号变为右括号, 右变左,记为<img src="https://latex.codecogs.com/gif.latex?%5Cbar&space;a_%7Bj+1%7D%5Cbar&space;a_%7Bj+2%7D%5Cldots&space;%5Cbar&space;a_%7B2n%7D"></p>
+<p>则括号列<img src="https://latex.codecogs.com/gif.latex?a_1a_2%5Cldots&space;a_%7Bj%7D%5Cbar&space;a_%7Bj+1%7D">为好括号列<br><img src="https://latex.codecogs.com/gif.latex?a_1a_2%5Cldots&space;a_%7Bj%7D%5Cbar&space;a_%7Bj+1%7D%5Cbar&space;a_%7Bj+2%7D%5Cldots&space;%5Cbar&space;a_%7B2n%7D">可好可坏,且有n-1个右,n+1个左, 共有<img src="https://latex.codecogs.com/gif.latex?%5Cfrac%7B2n%7D%7B(n+1)!(n-1)!%7D=C_%7B2n%7D%5E%7Bn+1%7D">个.</p>
+<p>所以坏括号列<img src="https://latex.codecogs.com/gif.latex?a_1a_2%5Cldots&space;a_%7B2n%7D"> 与括号列 <img src="https://latex.codecogs.com/gif.latex?a_1a_2%5Cldots&space;a_%7Bj%7D%5Cbar&space;a_%7Bj+1%7D%5Cbar&space;a_%7Bj+2%7D%5Cldots&space;%5Cbar&space;a_%7B2n%7D">, 有<img src="https://latex.codecogs.com/gif.latex?%5Cfrac%7B2n%7D%7B(n+1)!(n-1)!%7D=C_%7B2n%7D%5E%7Bn+1%7D">个</p>
+<p>那么好括号列有<br><img src="https://latex.codecogs.com/gif.latex?&space;c(n)=C_%7B2n%7D%5E%7Bn%7D&space;-&space;C_%7B2n%7D%5E%7Bn+1%7D&space;=%5Cfrac%7BC_%7B2n%7D%5E%7Bn%7D%7D%7Bn+1%7D&space;"></p>
+<blockquote>
+<p>推论: n个字符,进栈出栈(出栈可以在栈不为空的时候随时进行), 则出栈序列有 c(n)种</p>
+</blockquote>
+<p>这种先入后出的情形都是这样<br><img src="https://upload-images.jianshu.io/upload_images/7130568-235b542c14b6c82b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
+<p><a id="markdown-3-基数树radixtree" name="3-基数树radixtree"></a></p>
+<h1 id="3-基数树-radixTree">3. 3. 基数树(radixTree)</h1><p><img src="https://upload-images.jianshu.io/upload_images/7130568-cc84ec3ffd7c3d28.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br><a id="markdown-4-字典树trie" name="4-字典树trie"></a></p>
+<h1 id="4-字典树-trie">4. 4. 字典树(trie)</h1><p>又叫<code>前缀树</code>(preifx tree).适用于储存有公共前缀的字符串集合. 如果直接储存, 而很多字符串有公共前缀, 会浪费掉存储空间.<br>字典树可以看成是基数树的变形, 每个结点可以有多个孩子, 每个结点存储的是一个字符, 从根沿着结点走到一个结点,走过的路径形成字符序列, 如果有合适的单词就可以输出.</p>
+<p>当然,也可以同理得出后缀树<br><a id="markdown-41-ac-自动机" name="41-ac-自动机"></a></p>
+<h2 id="4-1-AC-自动机">4.1. 4.1. AC 自动机</h2><p>Aho-Corasick automation,是在字典树上添加匹配失败边(失配指针), 实现字符串搜索匹配的算法.<br><img src="https://upload-images.jianshu.io/upload_images/7130568-3a6ff51c0bdd0ee0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
+<p>图中蓝色结点 表示存在字符串, 灰色表示不存在.<br>黑色边是父亲到子结点的边, 蓝色边就是<code>失配指针</code>.</p>
+<p>蓝色边(终点称为起点的后缀结点): 连接字符串<strong>终点</strong>到在<strong>图中存在的</strong>, <strong>最长</strong>严格后缀的结点. 如 caa 的严格后缀为 aa,a, 空. 而在图中存在, 且最长的是字符串  a, 则连接到这个字符串的终点 a.</p>
+<p>绿色边(字典后缀结点): 终点是起点经过蓝色有向边到达的第一个蓝色结点.</p>
+<p>下面摘自 <code>wiki</code></p>
+<blockquote>
+<p>在每一步中，算法先查找当前节点的 “孩子节点”，如果没有找到匹配，查找它的后缀节点(suffix) 的孩子，如果仍然没有，接着查找后缀节点的后缀节点的孩子, 如此循环, 直到根结点，如果到达根节点仍没有找到匹配则结束。</p>
+<p>当算法查找到一个节点，则输出所有结束在当前位置的字典项。输出步骤为首先找到该节点的字典后缀，然后用递归的方式一直执行到节点没有字典前缀为止。同时，如果该节点为一个字典节点，则输出该节点本身。</p>
+<p>输入 abccab 后算法的执行步骤如下：<br><img src="https://upload-images.jianshu.io/upload_images/7130568-85329df49fa54685.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
+</blockquote>
+<p><a id="markdown-5-平衡二叉树" name="5-平衡二叉树"></a></p>
+<h1 id="5-平衡二叉树">5. 5. 平衡二叉树</h1><p>上面的二叉查找树不平衡,即经过多次插入,删除后,  其高度变化大, 不能保持<img src="https://latex.codecogs.com/gif.latex?%5CTheta(n)">的性能<br>而平衡二叉树就能.<br>平衡二叉树都是经过一些旋转操作, 使左右子树的结点高度相差不大,达到平衡<br> 有如下几种<br><a id="markdown-51-avl-tree" name="51-avl-tree"></a></p>
+<h2 id="5-1-AVL-Tree">5.1. 5.1. AVL Tree</h2><p><code>平衡因子</code>: 右子树高度 - 左子树高度<br>定义: 每个结点的平衡因子属于{0,-1,1}<br><img src="https://upload-images.jianshu.io/upload_images/7130568-aaf92117118f8773.gif?imageMogr2/auto-orient/strip" alt="AVL_Tree_Example(from wiki).gif"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/7130568-d3552412c97bc9a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="from wiki"></p>
+<p><a id="markdown-52-splaytree" name="52-splaytree"></a></p>
+<h2 id="5-2-splayTree">5.2. 5.2. splayTree</h2><p>伸展树, 它的特点是每次将访问的结点通过旋转旋转到根结点.<br>其实它并不平衡. 但是插入,查找,删除操作 的平摊时间是<img src="https://latex.codecogs.com/gif.latex?O(logn)"><br>有三种旋转,下面都是将访问过的 x 旋转到 根部<br><a id="markdown-521-zig-step" name="521-zig-step"></a></p>
+<h3 id="5-2-1-Zig-step">5.2.1. 5.2.1. Zig-step</h3><p><img src="https://upload-images.jianshu.io/upload_images/7130568-747a88861d7acde8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="zig"><br><a id="markdown-522-zig-zig-step" name="522-zig-zig-step"></a></p>
+<h3 id="5-2-2-Zig-zig-step">5.2.2. 5.2.2. Zig-zig step</h3><p><img src="https://upload-images.jianshu.io/upload_images/7130568-8a688b1a66a3da21.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="zig-zig"><br><a id="markdown-523-zig-zag-step" name="523-zig-zag-step"></a></p>
+<h3 id="5-2-3-Zig-zag-step">5.2.3. 5.2.3. Zig-zag step</h3><p><img src="https://upload-images.jianshu.io/upload_images/7130568-c3d7e8aeb7c834ec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="zig-zag"><br><a id="markdown-53-read-black-tree" name="53-read-black-tree"></a></p>
+<h2 id="5-3-read-black-Tree">5.3. 5.3. read-black Tree</h2><p>同样是平衡的二叉树, 以后单独写一篇关于红黑树的.</p>
+<p><a id="markdown-54-treap" name="54-treap"></a></p>
+<h2 id="5-4-treap">5.4. 5.4. treap</h2><p><a href="#21-%E9%9A%8F%E6%9C%BA%E6%9E%84%E9%80%A0%E7%9A%84%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91">前面提到</a>, 随机构造的二叉查找树高度为 <img src="https://latex.codecogs.com/gif.latex?h=O(logn)">,以及在<a href="/alg-genral.html">算法 general</a> 中说明了怎样 随机化(shuffle)一个给定的序列.</p>
+<p>所以,为了得到一个平衡的二叉排序树,我们可以将给定的序列随机化, 然后再进行构造二叉排序树.</p>
+<p>但是如果不能一次得到全部的数据,也就是可能插入新的数据的时候,该怎么办呢? 可以证明,满足下面的条件构造的结构相当于同时得到全部数据, 也就是随机化的二叉查找树.</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/7130568-f8fd5006a58ce451.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="treap"></p>
+<p>这种结构叫 <code>treap</code>, 不仅有要排序的关键字 key, 还有随机生成的,各不相等的关键字<code>priority</code>,代表插入的顺序.</p>
+<ul>
+<li>二叉查找树的排序性质: 双亲结点的 key 大于左孩子,小于右孩子</li>
+<li>最小(大)堆的堆序性质: 双亲的 prority小于(大于) 孩子的 prority</li>
+</ul>
+<p>插入的实现: 先进行二叉查找树的插入,成为叶子结点, 再通过旋转 实现 <code>上浮</code>(堆中术语).<br>将先排序 key, 再排序 prority(排序prority 时通过旋转保持 key 的排序)</p>
+<p><a id="markdown-6-总结" name="6-总结"></a></p>
+<h1 id="6-总结">6. 6. 总结</h1><p>还有很多有趣的树结构,<br>比如斜堆, 竞赛树(赢者树,输者树,线段树, 索引树,B树, fingerTree(不知道是不是译为手指树233)…<br>这里就不详细介绍了, 如果以后有时间,可能挑几个单独写一篇文章</p>
+<p><a id="markdown-7-附代码" name="7-附代码"></a></p>
+<h1 id="7-附代码">7. 7. 附代码</h1><p><strong><a target="_blank" rel="noopener" href="https://github.com/mbinary/algorithm-in-python.git">github地址</a></strong></p>
+<p><a id="markdown-71-二叉树binarytree" name="71-二叉树binarytree"></a></p>
+<h2 id="7-1-二叉树-binaryTree">7.1. 7.1. 二叉树(binaryTree)</h2><pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> functools <span class="token keyword">import</span> total_ordering
+
+@total_ordering
+<span class="token keyword">class</span> <span class="token class-name">node</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>val<span class="token punctuation">,</span>left<span class="token operator">=</span>None<span class="token punctuation">,</span>right<span class="token operator">=</span>None<span class="token punctuation">,</span>freq <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>val<span class="token operator">=</span>val
+        self<span class="token punctuation">.</span>left<span class="token operator">=</span>left
+        self<span class="token punctuation">.</span>right<span class="token operator">=</span>right
+        self<span class="token punctuation">.</span>freq <span class="token operator">=</span> freq
+    <span class="token keyword">def</span> <span class="token function">__lt__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>nd<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>val<span class="token operator">&lt;</span>nd<span class="token punctuation">.</span>val
+    <span class="token keyword">def</span> <span class="token function">__eq__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>nd<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>val<span class="token operator">==</span>nd<span class="token punctuation">.</span>val
+    <span class="token keyword">def</span> <span class="token function">__repr__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token string">'node(&amp;#123;&amp;#125;)'</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>self<span class="token punctuation">.</span>val<span class="token punctuation">)</span>
+
+<span class="token keyword">class</span> <span class="token class-name">binaryTree</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>root<span class="token operator">=</span>None
+    <span class="token keyword">def</span> <span class="token function">add</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>val<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">def</span> <span class="token function">_add</span><span class="token punctuation">(</span>nd<span class="token punctuation">,</span>newNode<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> nd<span class="token operator">&lt;</span>newNode<span class="token punctuation">:</span>
+                <span class="token keyword">if</span> nd<span class="token punctuation">.</span>right <span class="token keyword">is</span> None<span class="token punctuation">:</span>nd<span class="token punctuation">.</span>right <span class="token operator">=</span> newNode
+                <span class="token keyword">else</span><span class="token punctuation">:</span>_add<span class="token punctuation">(</span>nd<span class="token punctuation">.</span>right<span class="token punctuation">,</span>newNode<span class="token punctuation">)</span>
+            <span class="token keyword">elif</span> nd<span class="token operator">></span>newNode<span class="token punctuation">:</span>
+                <span class="token keyword">if</span> nd<span class="token punctuation">.</span>left <span class="token keyword">is</span> None<span class="token punctuation">:</span>nd<span class="token punctuation">.</span>left <span class="token operator">=</span> newNode
+                <span class="token keyword">else</span> <span class="token punctuation">:</span> _add<span class="token punctuation">(</span>nd<span class="token punctuation">.</span>left<span class="token punctuation">,</span>newNode<span class="token punctuation">)</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>nd<span class="token punctuation">.</span>freq <span class="token operator">+=</span><span class="token number">1</span>
+        _add<span class="token punctuation">(</span>self<span class="token punctuation">.</span>root<span class="token punctuation">,</span>node<span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">find</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>val<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        prt<span class="token operator">=</span> self<span class="token punctuation">.</span>_findPrt<span class="token punctuation">(</span>self<span class="token punctuation">.</span>root<span class="token punctuation">,</span>node<span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">,</span>None<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> prt<span class="token punctuation">.</span>left <span class="token operator">and</span> prt<span class="token punctuation">.</span>left<span class="token punctuation">.</span>val<span class="token operator">==</span>val<span class="token punctuation">:</span>
+            <span class="token keyword">return</span> prt<span class="token punctuation">.</span>left
+        <span class="token keyword">elif</span>  prt<span class="token punctuation">.</span>right <span class="token operator">and</span> prt<span class="token punctuation">.</span>right<span class="token punctuation">.</span>val<span class="token operator">==</span>val<span class="token punctuation">:</span><span class="token keyword">return</span> prt<span class="token punctuation">.</span>right
+        <span class="token keyword">else</span> <span class="token punctuation">:</span><span class="token keyword">return</span> None
+    <span class="token keyword">def</span> <span class="token function">_findPrt</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>nd<span class="token punctuation">,</span>tgt<span class="token punctuation">,</span>prt<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> nd<span class="token operator">==</span>tgt <span class="token operator">or</span> nd <span class="token keyword">is</span> None<span class="token punctuation">:</span><span class="token keyword">return</span> prt
+        <span class="token keyword">elif</span> nd<span class="token operator">&lt;</span>tgt<span class="token punctuation">:</span><span class="token keyword">return</span> self<span class="token punctuation">.</span>_findPrt<span class="token punctuation">(</span>nd<span class="token punctuation">.</span>right<span class="token punctuation">,</span>tgt<span class="token punctuation">,</span>nd<span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span><span class="token keyword">return</span> self<span class="token punctuation">.</span>_findPrt<span class="token punctuation">(</span>nd<span class="token punctuation">.</span>left<span class="token punctuation">,</span>tgt<span class="token punctuation">,</span>nd<span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">delete</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>val<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        prt<span class="token operator">=</span> self<span class="token punctuation">.</span>_findPrt<span class="token punctuation">(</span>self<span class="token punctuation">.</span>root<span class="token punctuation">,</span>node<span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">,</span>None<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> prt<span class="token punctuation">.</span>left <span class="token operator">and</span> prt<span class="token punctuation">.</span>left<span class="token punctuation">.</span>val<span class="token operator">==</span>val<span class="token punctuation">:</span>
+            l<span class="token operator">=</span>prt<span class="token punctuation">.</span>left
+            <span class="token keyword">if</span> l<span class="token punctuation">.</span>left <span class="token keyword">is</span> None<span class="token punctuation">:</span>prt<span class="token punctuation">.</span>left <span class="token operator">=</span> l<span class="token punctuation">.</span>right
+            <span class="token keyword">elif</span> l<span class="token punctuation">.</span>right <span class="token keyword">is</span> None <span class="token punctuation">:</span> prt<span class="token punctuation">.</span>left <span class="token operator">=</span> l<span class="token punctuation">.</span>left
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                nd <span class="token operator">=</span> l<span class="token punctuation">.</span>left
+                <span class="token keyword">while</span> nd<span class="token punctuation">.</span>right <span class="token keyword">is</span> <span class="token operator">not</span> None<span class="token punctuation">:</span>nd <span class="token operator">=</span> nd<span class="token punctuation">.</span>right
+                nd<span class="token punctuation">.</span>right <span class="token operator">=</span> l<span class="token punctuation">.</span>right
+                prt<span class="token punctuation">.</span>left <span class="token operator">=</span> l<span class="token punctuation">.</span>left
+        <span class="token keyword">elif</span>  prt<span class="token punctuation">.</span>right <span class="token operator">and</span> prt<span class="token punctuation">.</span>right<span class="token punctuation">.</span>val<span class="token operator">==</span>val<span class="token punctuation">:</span>
+            r<span class="token operator">=</span>prt<span class="token punctuation">.</span>right
+            <span class="token keyword">if</span> r<span class="token punctuation">.</span>right <span class="token keyword">is</span> None<span class="token punctuation">:</span>prt<span class="token punctuation">.</span>right <span class="token operator">=</span> r<span class="token punctuation">.</span>right
+            <span class="token keyword">elif</span> r<span class="token punctuation">.</span>right <span class="token keyword">is</span> None <span class="token punctuation">:</span> prt<span class="token punctuation">.</span>right <span class="token operator">=</span> r<span class="token punctuation">.</span>left
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                nd <span class="token operator">=</span> r<span class="token punctuation">.</span>left
+                <span class="token keyword">while</span> nd<span class="token punctuation">.</span>right <span class="token keyword">is</span> <span class="token operator">not</span> None<span class="token punctuation">:</span>nd <span class="token operator">=</span> nd<span class="token punctuation">.</span>right
+                nd<span class="token punctuation">.</span>right <span class="token operator">=</span> r<span class="token punctuation">.</span>right
+                prt<span class="token punctuation">.</span>left <span class="token operator">=</span> r<span class="token punctuation">.</span>left
+
+    <span class="token keyword">def</span> <span class="token function">preOrder</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">def</span> <span class="token function">_p</span><span class="token punctuation">(</span>nd<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> nd <span class="token keyword">is</span> <span class="token operator">not</span> None<span class="token punctuation">:</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span>nd<span class="token punctuation">)</span>
+                _p<span class="token punctuation">(</span>nd<span class="token punctuation">.</span>left<span class="token punctuation">)</span>
+                _p<span class="token punctuation">(</span>nd<span class="token punctuation">.</span>right<span class="token punctuation">)</span>
+        _p<span class="token punctuation">(</span>self<span class="token punctuation">.</span>root<span class="token punctuation">)</span>
+</code></pre>
+<p><a id="markdown-72-前缀树trie" name="72-前缀树trie"></a></p>
+<h2 id="7-2-前缀树-Trie">7.2. 7.2. 前缀树(Trie)</h2><pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">node</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>val <span class="token operator">=</span> None<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>val <span class="token operator">=</span> val
+        self<span class="token punctuation">.</span>isKey <span class="token operator">=</span> <span class="token boolean">False</span>
+        self<span class="token punctuation">.</span>children <span class="token operator">=</span> <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;&amp;#125;</span>
+    <span class="token keyword">def</span> <span class="token function">__getitem__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>i<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>children<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+    <span class="token keyword">def</span> <span class="token function">__iter__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> iter<span class="token punctuation">(</span>self<span class="token punctuation">.</span>children<span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">__setitem__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>i<span class="token punctuation">,</span>x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>children<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> x
+    <span class="token keyword">def</span> <span class="token function">__bool__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>children<span class="token operator">!=</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;&amp;#125;</span>
+    <span class="token keyword">def</span> <span class="token function">__str__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token string">'val: '</span><span class="token operator">+</span>str<span class="token punctuation">(</span>self<span class="token punctuation">.</span>val<span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">'\nchildren: '</span><span class="token operator">+</span><span class="token string">' '</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>self<span class="token punctuation">.</span>children<span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">__repr__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> str<span class="token punctuation">(</span>self<span class="token punctuation">)</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Trie</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
+
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>root<span class="token operator">=</span>node<span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>dic <span class="token operator">=</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;'insert':self.insert,'startsWith':self.startsWith,'search':self.search&amp;#125;</span>
+
+    <span class="token keyword">def</span> <span class="token function">insert</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> word<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token triple-quoted-string string">"""
+        Inserts a word into the trie.
+        :type word: str
+        :rtype: void
+        """</span>
+        <span class="token keyword">if</span> <span class="token operator">not</span> word<span class="token punctuation">:</span><span class="token keyword">return</span>
+        nd <span class="token operator">=</span> self<span class="token punctuation">.</span>root
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> word<span class="token punctuation">:</span>
+            <span class="token keyword">if</span> i <span class="token keyword">in</span> nd<span class="token punctuation">:</span>
+                nd <span class="token operator">=</span> nd<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                newNode<span class="token operator">=</span> node<span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+                nd<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> newNode
+                nd <span class="token operator">=</span> newNode
+        <span class="token keyword">else</span><span class="token punctuation">:</span>nd<span class="token punctuation">.</span>isKey <span class="token operator">=</span> <span class="token boolean">True</span>
+    <span class="token keyword">def</span> <span class="token function">search</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> word<span class="token punctuation">,</span>matchAll<span class="token operator">=</span><span class="token string">'.'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token triple-quoted-string string">"""support matchall function  eg,  'p.d' matchs 'pad' , 'pid'
+        """</span>
+        self<span class="token punctuation">.</span>matchAll <span class="token operator">=</span> <span class="token string">'.'</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>_search<span class="token punctuation">(</span>self<span class="token punctuation">.</span>root<span class="token punctuation">,</span>word<span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">_search</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>nd<span class="token punctuation">,</span>word<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">for</span> idx<span class="token punctuation">,</span>i <span class="token keyword">in</span> enumerate<span class="token punctuation">(</span>word<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> i<span class="token operator">==</span>self<span class="token punctuation">.</span>matchAll <span class="token punctuation">:</span>
+                <span class="token keyword">for</span> j <span class="token keyword">in</span> nd<span class="token punctuation">:</span>
+                    bl <span class="token operator">=</span>self<span class="token punctuation">.</span>_search<span class="token punctuation">(</span>nd<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span>word<span class="token punctuation">[</span>idx<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+                    <span class="token keyword">if</span> bl<span class="token punctuation">:</span><span class="token keyword">return</span> <span class="token boolean">True</span>
+                <span class="token keyword">else</span><span class="token punctuation">:</span><span class="token keyword">return</span> <span class="token boolean">False</span>
+            <span class="token keyword">if</span> i  <span class="token keyword">in</span> nd<span class="token punctuation">:</span>
+                nd <span class="token operator">=</span> nd<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span><span class="token keyword">return</span> <span class="token boolean">False</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span><span class="token keyword">return</span> nd<span class="token punctuation">.</span>isKey
+    <span class="token keyword">def</span> <span class="token function">startsWith</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> prefix<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token triple-quoted-string string">"""
+        Returns if there is any word in the trie that starts with the given prefix.
+        :type prefix: str
+        :rtype: bool
+        """</span>
+        nd <span class="token operator">=</span> self<span class="token punctuation">.</span>root
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> prefix<span class="token punctuation">:</span>
+            <span class="token keyword">if</span> i <span class="token keyword">in</span>  nd<span class="token punctuation">:</span>
+                nd<span class="token operator">=</span> nd<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span><span class="token keyword">return</span> <span class="token boolean">False</span>
+        <span class="token keyword">return</span> <span class="token boolean">True</span>
+    <span class="token keyword">def</span> <span class="token function">display</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'preOrderTraverse  data of the Trie'</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>preOrder<span class="token punctuation">(</span>self<span class="token punctuation">.</span>root<span class="token punctuation">,</span><span class="token string">''</span><span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">preOrder</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>root<span class="token punctuation">,</span>s<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        s<span class="token operator">=</span>s<span class="token operator">+</span>root<span class="token punctuation">.</span>val
+        <span class="token keyword">if</span>  root<span class="token punctuation">.</span>isKey<span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> root<span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>preOrder<span class="token punctuation">(</span>root<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span>s<span class="token punctuation">)</span>
+</code></pre>
+<p><a id="markdown-73-赢者树winnertree" name="73-赢者树winnertree"></a></p>
+<h2 id="7-3-赢者树-winnerTree">7.3. 7.3. 赢者树(winnerTree)</h2><pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">winnerTree</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">'''if i&lt;lowExt    p = (i+offset)//2
+       else           p = (i+n-1-lowExt)//2
+       offset is a num 2^k-1 just bigger than n
+        p is the index of tree
+        i is the index of players
+        lowExt is the double node num of the lowest layer of the tree
+    '''</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>players<span class="token punctuation">,</span>reverse<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>n<span class="token operator">=</span>len<span class="token punctuation">(</span>players<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>tree <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">*</span>self<span class="token punctuation">.</span>n
+        players<span class="token punctuation">.</span>insert<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>players<span class="token operator">=</span>players
+        self<span class="token punctuation">.</span>reverse<span class="token operator">=</span>reverse
+        self<span class="token punctuation">.</span>getNum<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>initTree<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">getNum</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        i<span class="token operator">=</span><span class="token number">1</span>
+        <span class="token keyword">while</span> <span class="token number">2</span><span class="token operator">*</span>i<span class="token operator">&lt;</span> self<span class="token punctuation">.</span>n<span class="token punctuation">:</span>i<span class="token operator">=</span>i<span class="token operator">*</span><span class="token number">2</span>
+        <span class="token keyword">if</span> <span class="token number">2</span><span class="token operator">*</span>i <span class="token operator">==</span>self<span class="token punctuation">.</span> n<span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>lowExt<span class="token operator">=</span><span class="token number">0</span>
+            self<span class="token punctuation">.</span>s <span class="token operator">=</span> <span class="token number">2</span><span class="token operator">*</span>i<span class="token number">-1</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>lowExt <span class="token operator">=</span> <span class="token punctuation">(</span>self<span class="token punctuation">.</span>n<span class="token operator">-</span>i<span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">2</span>
+            self<span class="token punctuation">.</span>s <span class="token operator">=</span> i<span class="token number">-1</span>
+        self<span class="token punctuation">.</span>offset <span class="token operator">=</span> <span class="token number">2</span><span class="token operator">*</span>i<span class="token number">-1</span>
+    <span class="token keyword">def</span> <span class="token function">treeToArray</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>p<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token number">2</span><span class="token operator">*</span>p<span class="token operator">-</span>self<span class="token punctuation">.</span>offset <span class="token keyword">if</span> p<span class="token operator">></span>self<span class="token punctuation">.</span>s <span class="token keyword">else</span> <span class="token number">2</span><span class="token operator">*</span>p<span class="token operator">+</span>self<span class="token punctuation">.</span>lowExt<span class="token operator">-</span>self<span class="token punctuation">.</span>n<span class="token operator">+</span><span class="token number">1</span>
+    <span class="token keyword">def</span> <span class="token function">arrayToTree</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>i<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span>i<span class="token operator">+</span>self<span class="token punctuation">.</span>offset<span class="token punctuation">)</span><span class="token operator">//</span><span class="token number">2</span> <span class="token keyword">if</span> i<span class="token operator">&lt;=</span>self<span class="token punctuation">.</span>lowExt <span class="token keyword">else</span> <span class="token punctuation">(</span>i<span class="token operator">-</span>self<span class="token punctuation">.</span>lowExt<span class="token operator">+</span> self<span class="token punctuation">.</span>n<span class="token number">-1</span><span class="token punctuation">)</span><span class="token operator">//</span><span class="token number">2</span>
+    <span class="token keyword">def</span> <span class="token function">win</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>a<span class="token punctuation">,</span>b<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> a<span class="token operator">&lt;</span>b <span class="token keyword">if</span> self<span class="token punctuation">.</span>reverse <span class="token keyword">else</span> a<span class="token operator">></span>b
+    <span class="token keyword">def</span> <span class="token function">initTree</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>p<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> p<span class="token operator">>=</span>self<span class="token punctuation">.</span>n<span class="token punctuation">:</span>
+            delta <span class="token operator">=</span> p<span class="token operator">%</span><span class="token number">2</span>  <span class="token comment" spellcheck="true">#!!! good job  notice delta mark the lchild or rchlid</span>
+            <span class="token keyword">return</span> self<span class="token punctuation">.</span>players<span class="token punctuation">[</span>self<span class="token punctuation">.</span>treeToArray<span class="token punctuation">(</span>p<span class="token operator">//</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">+</span>delta<span class="token punctuation">]</span>
+        l <span class="token operator">=</span> self<span class="token punctuation">.</span>initTree<span class="token punctuation">(</span><span class="token number">2</span><span class="token operator">*</span>p<span class="token punctuation">)</span>
+        r <span class="token operator">=</span> self<span class="token punctuation">.</span>initTree<span class="token punctuation">(</span><span class="token number">2</span><span class="token operator">*</span>p<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>tree<span class="token punctuation">[</span>p<span class="token punctuation">]</span> <span class="token operator">=</span> l <span class="token keyword">if</span> self<span class="token punctuation">.</span>win<span class="token punctuation">(</span>l<span class="token punctuation">,</span>r<span class="token punctuation">)</span> <span class="token keyword">else</span> r
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>tree<span class="token punctuation">[</span>p<span class="token punctuation">]</span>
+    <span class="token keyword">def</span> <span class="token function">winner</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        idx <span class="token operator">=</span> <span class="token number">1</span>
+        <span class="token keyword">while</span> <span class="token number">2</span><span class="token operator">*</span>idx<span class="token operator">&lt;</span>self<span class="token punctuation">.</span>n<span class="token punctuation">:</span>
+            idx <span class="token operator">=</span> <span class="token number">2</span><span class="token operator">*</span>idx <span class="token keyword">if</span> self<span class="token punctuation">.</span>tree<span class="token punctuation">[</span><span class="token number">2</span><span class="token operator">*</span>idx<span class="token punctuation">]</span> <span class="token operator">==</span> self<span class="token punctuation">.</span>tree<span class="token punctuation">[</span>idx<span class="token punctuation">]</span> <span class="token keyword">else</span> idx<span class="token operator">*</span><span class="token number">2</span><span class="token operator">+</span><span class="token number">1</span>
+        num <span class="token operator">=</span> self<span class="token punctuation">.</span>treeToArray<span class="token punctuation">(</span>idx<span class="token punctuation">)</span>
+        num <span class="token operator">=</span> num<span class="token operator">+</span><span class="token number">1</span> <span class="token keyword">if</span> self<span class="token punctuation">.</span>players<span class="token punctuation">[</span>num<span class="token punctuation">]</span> <span class="token operator">!=</span>self<span class="token punctuation">.</span>tree<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token keyword">else</span> num
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>tree<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>num
+    <span class="token keyword">def</span> <span class="token function">getOppo</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>i<span class="token punctuation">,</span>x<span class="token punctuation">,</span>p<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        oppo<span class="token operator">=</span>None
+        <span class="token keyword">if</span> <span class="token number">2</span><span class="token operator">*</span>p<span class="token operator">&lt;</span>self<span class="token punctuation">.</span>n<span class="token punctuation">:</span>oppo<span class="token operator">=</span>self<span class="token punctuation">.</span>tree<span class="token punctuation">[</span><span class="token number">2</span><span class="token operator">*</span>p<span class="token punctuation">]</span>
+        <span class="token keyword">elif</span> i<span class="token operator">&lt;=</span>self<span class="token punctuation">.</span>lowExt<span class="token punctuation">:</span>oppo<span class="token operator">=</span>self<span class="token punctuation">.</span>players<span class="token punctuation">[</span>i<span class="token number">-1</span><span class="token operator">+</span>i<span class="token operator">%</span><span class="token number">2</span><span class="token operator">*</span><span class="token number">2</span><span class="token punctuation">]</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            lpl<span class="token operator">=</span> self<span class="token punctuation">.</span>players<span class="token punctuation">[</span><span class="token number">2</span><span class="token operator">*</span>p<span class="token operator">+</span>self<span class="token punctuation">.</span>lowExt<span class="token operator">-</span>self<span class="token punctuation">.</span>n<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span>
+            oppo <span class="token operator">=</span> lpl <span class="token keyword">if</span> lpl<span class="token operator">!=</span>x <span class="token keyword">else</span> self<span class="token punctuation">.</span>players<span class="token punctuation">[</span><span class="token number">2</span><span class="token operator">*</span>p<span class="token operator">+</span>self<span class="token punctuation">.</span>lowExt<span class="token operator">-</span>self<span class="token punctuation">.</span>n<span class="token operator">+</span><span class="token number">2</span><span class="token punctuation">]</span>
+        <span class="token keyword">return</span> oppo
+    <span class="token keyword">def</span> <span class="token function">update</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>i<span class="token punctuation">,</span>x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token triple-quoted-string string">''' i is 1-indexed  which is the num of player
+            and x is the new val of the player '''</span>
+        self<span class="token punctuation">.</span>players<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>x
+        p <span class="token operator">=</span> self<span class="token punctuation">.</span>arrayToTree<span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+        oppo <span class="token operator">=</span>self<span class="token punctuation">.</span>getOppo<span class="token punctuation">(</span>i<span class="token punctuation">,</span>x<span class="token punctuation">,</span>p<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>tree<span class="token punctuation">[</span>p<span class="token punctuation">]</span> <span class="token operator">=</span> x <span class="token keyword">if</span> self<span class="token punctuation">.</span>win<span class="token punctuation">(</span>x<span class="token punctuation">,</span>oppo<span class="token punctuation">)</span> <span class="token keyword">else</span> oppo
+        p<span class="token operator">=</span>p<span class="token operator">//</span><span class="token number">2</span>
+        <span class="token keyword">while</span> p<span class="token punctuation">:</span>
+            l <span class="token operator">=</span> self<span class="token punctuation">.</span>tree<span class="token punctuation">[</span>p<span class="token operator">*</span><span class="token number">2</span><span class="token punctuation">]</span>
+            r <span class="token operator">=</span> None
+            <span class="token keyword">if</span> <span class="token number">2</span><span class="token operator">*</span>p<span class="token operator">+</span><span class="token number">1</span><span class="token operator">&lt;</span>self<span class="token punctuation">.</span>n<span class="token punctuation">:</span>r<span class="token operator">=</span>self<span class="token punctuation">.</span>tree<span class="token punctuation">[</span>p<span class="token operator">*</span><span class="token number">2</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span>   <span class="token comment" spellcheck="true">#notice this !!!</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>r <span class="token operator">=</span> self<span class="token punctuation">.</span>players<span class="token punctuation">[</span><span class="token number">2</span><span class="token operator">*</span>p<span class="token operator">+</span>self<span class="token punctuation">.</span>lowExt<span class="token operator">-</span>self<span class="token punctuation">.</span>n<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span>
+            self<span class="token punctuation">.</span>tree<span class="token punctuation">[</span>p<span class="token punctuation">]</span> <span class="token operator">=</span> l <span class="token keyword">if</span> self<span class="token punctuation">.</span>win<span class="token punctuation">(</span>l<span class="token punctuation">,</span>r<span class="token punctuation">)</span> <span class="token keyword">else</span> r
+            p<span class="token operator">=</span>p<span class="token operator">//</span><span class="token number">2</span>
+</code></pre>
+<p><a id="markdown-74-左斜堆" name="74-左斜堆"></a></p>
+<h2 id="7-4-左斜堆">7.4. 7.4. 左斜堆</h2><pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> functools <span class="token keyword">import</span> total_ordering
+@total_ordering
+
+<span class="token keyword">class</span> <span class="token class-name">node</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>val<span class="token punctuation">,</span>freq<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span>s<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span>left<span class="token operator">=</span>None<span class="token punctuation">,</span>right<span class="token operator">=</span>None<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>val<span class="token operator">=</span>val
+        self<span class="token punctuation">.</span>freq<span class="token operator">=</span>freq
+        self<span class="token punctuation">.</span>s<span class="token operator">=</span>s
+        <span class="token keyword">if</span> left <span class="token keyword">is</span> None <span class="token operator">or</span> right <span class="token keyword">is</span> None<span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>left <span class="token operator">=</span> left <span class="token keyword">if</span> left <span class="token keyword">is</span> <span class="token operator">not</span> None <span class="token keyword">else</span> right
+            self<span class="token punctuation">.</span>right <span class="token operator">=</span>None
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> left<span class="token punctuation">.</span>s<span class="token operator">&lt;</span>right<span class="token punctuation">.</span>s<span class="token punctuation">:</span>
+                left<span class="token punctuation">,</span>right <span class="token operator">=</span>right<span class="token punctuation">,</span> left
+            self<span class="token punctuation">.</span>left<span class="token operator">=</span>left
+            self<span class="token punctuation">.</span>right<span class="token operator">=</span>right
+            self<span class="token punctuation">.</span>s<span class="token operator">+=</span>self<span class="token punctuation">.</span>right<span class="token punctuation">.</span>s
+    <span class="token keyword">def</span> <span class="token function">__eq__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>nd<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>val<span class="token operator">==</span>nd<span class="token punctuation">.</span>val
+    <span class="token keyword">def</span> <span class="token function">__lt__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>nd<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>val<span class="token operator">&lt;</span>nd<span class="token punctuation">.</span>val
+    <span class="token keyword">def</span> <span class="token function">__repr__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token string">'node(val=%d,freq=%d,s=%d)'</span><span class="token operator">%</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>val<span class="token punctuation">,</span>self<span class="token punctuation">.</span>freq<span class="token punctuation">,</span>self<span class="token punctuation">.</span>s<span class="token punctuation">)</span>
+
+<span class="token keyword">class</span> <span class="token class-name">leftHeap</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>root<span class="token operator">=</span>None<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>root<span class="token operator">=</span>root
+    <span class="token keyword">def</span> <span class="token function">__bool__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>root <span class="token keyword">is</span> <span class="token operator">not</span> None
+    @staticmethod
+    <span class="token keyword">def</span> <span class="token function">_merge</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span>t<span class="token punctuation">)</span><span class="token punctuation">:</span>  <span class="token comment" spellcheck="true">#-> int</span>
+        <span class="token keyword">if</span> root <span class="token keyword">is</span> None<span class="token punctuation">:</span><span class="token keyword">return</span> t
+        <span class="token keyword">if</span> t <span class="token keyword">is</span> None<span class="token punctuation">:</span><span class="token keyword">return</span> root
+        <span class="token keyword">if</span> root<span class="token operator">&lt;</span>t<span class="token punctuation">:</span>
+            root<span class="token punctuation">,</span>t<span class="token operator">=</span>t<span class="token punctuation">,</span>root
+        root<span class="token punctuation">.</span>right <span class="token operator">=</span> leftHeap<span class="token punctuation">.</span>_merge<span class="token punctuation">(</span>root<span class="token punctuation">.</span>right<span class="token punctuation">,</span>t<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> root<span class="token punctuation">.</span>left <span class="token keyword">is</span> None <span class="token operator">or</span> root<span class="token punctuation">.</span>right <span class="token keyword">is</span> None<span class="token punctuation">:</span>
+            root<span class="token punctuation">.</span>s<span class="token operator">=</span><span class="token number">1</span>
+            <span class="token keyword">if</span> root<span class="token punctuation">.</span>left <span class="token keyword">is</span> None<span class="token punctuation">:</span>
+                root<span class="token punctuation">.</span>left<span class="token punctuation">,</span>root<span class="token punctuation">.</span>right <span class="token operator">=</span> root<span class="token punctuation">.</span>right<span class="token punctuation">,</span>None
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> root<span class="token punctuation">.</span>left<span class="token punctuation">.</span>s<span class="token operator">&lt;</span>root<span class="token punctuation">.</span>right<span class="token punctuation">.</span>s<span class="token punctuation">:</span>
+                root<span class="token punctuation">.</span>left<span class="token punctuation">,</span>root<span class="token punctuation">.</span>right <span class="token operator">=</span> root<span class="token punctuation">.</span>right<span class="token punctuation">,</span>root<span class="token punctuation">.</span>left
+            root<span class="token punctuation">.</span>s <span class="token operator">=</span> root<span class="token punctuation">.</span>right<span class="token punctuation">.</span>s<span class="token operator">+</span><span class="token number">1</span>
+        <span class="token keyword">return</span> root
+    <span class="token keyword">def</span> <span class="token function">insert</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>nd<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token operator">not</span> isinstance<span class="token punctuation">(</span>nd<span class="token punctuation">,</span>node<span class="token punctuation">)</span><span class="token punctuation">:</span>nd <span class="token operator">=</span> node<span class="token punctuation">(</span>nd<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>root <span class="token keyword">is</span> None<span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>root<span class="token operator">=</span>nd
+            <span class="token keyword">return</span>
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>root<span class="token operator">==</span>nd<span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>root<span class="token punctuation">.</span>freq<span class="token operator">+=</span><span class="token number">1</span>
+            <span class="token keyword">return</span>
+        prt <span class="token operator">=</span>self<span class="token punctuation">.</span> _findPrt<span class="token punctuation">(</span>self<span class="token punctuation">.</span>root<span class="token punctuation">,</span>nd<span class="token punctuation">,</span>None<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> prt <span class="token keyword">is</span> None<span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>root<span class="token operator">=</span>leftHeap<span class="token punctuation">.</span>_merge<span class="token punctuation">(</span>self<span class="token punctuation">.</span>root<span class="token punctuation">,</span>nd<span class="token punctuation">)</span>
+        <span class="token keyword">else</span> <span class="token punctuation">:</span>
+            <span class="token keyword">if</span> prt<span class="token punctuation">.</span>left<span class="token operator">==</span>nd<span class="token punctuation">:</span>
+                prt<span class="token punctuation">.</span>left<span class="token punctuation">.</span>freq<span class="token operator">+=</span><span class="token number">1</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>prt<span class="token punctuation">.</span>right<span class="token punctuation">.</span>freq<span class="token operator">+=</span><span class="token number">1</span>
+    <span class="token keyword">def</span> <span class="token function">remove</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>nd<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token operator">not</span> isinstance<span class="token punctuation">(</span>nd<span class="token punctuation">,</span>node<span class="token punctuation">)</span><span class="token punctuation">:</span>nd <span class="token operator">=</span> node<span class="token punctuation">(</span>nd<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>root<span class="token operator">==</span>nd<span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>root<span class="token operator">=</span>leftHeap<span class="token punctuation">.</span>_merge<span class="token punctuation">(</span>self<span class="token punctuation">.</span>root<span class="token punctuation">.</span>left<span class="token punctuation">,</span>self<span class="token punctuation">.</span>root<span class="token punctuation">.</span>right<span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            prt <span class="token operator">=</span> self<span class="token punctuation">.</span>_findPrt<span class="token punctuation">(</span>self<span class="token punctuation">.</span>root<span class="token punctuation">,</span>nd<span class="token punctuation">,</span>None<span class="token punctuation">)</span>
+            <span class="token keyword">if</span> prt <span class="token keyword">is</span> <span class="token operator">not</span> None<span class="token punctuation">:</span>
+                <span class="token keyword">if</span> prt<span class="token punctuation">.</span>left<span class="token operator">==</span>nd<span class="token punctuation">:</span>
+                    prt<span class="token punctuation">.</span>left<span class="token operator">=</span>leftHeap<span class="token punctuation">.</span>_merge<span class="token punctuation">(</span>prt<span class="token punctuation">.</span>left<span class="token punctuation">.</span>left<span class="token punctuation">,</span>prt<span class="token punctuation">.</span>left<span class="token punctuation">.</span>right<span class="token punctuation">)</span>
+                <span class="token keyword">else</span><span class="token punctuation">:</span>
+                    prt<span class="token punctuation">.</span>right<span class="token operator">=</span>leftHeap<span class="token punctuation">.</span>_merge<span class="token punctuation">(</span>prt<span class="token punctuation">.</span>right<span class="token punctuation">.</span>left<span class="token punctuation">,</span>prt<span class="token punctuation">.</span>right<span class="token punctuation">.</span>right<span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">find</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>nd<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token operator">not</span> isinstance<span class="token punctuation">(</span>nd<span class="token punctuation">,</span>node<span class="token punctuation">)</span><span class="token punctuation">:</span>nd <span class="token operator">=</span> node<span class="token punctuation">(</span>nd<span class="token punctuation">)</span>
+        prt <span class="token operator">=</span> self<span class="token punctuation">.</span>_findPrt<span class="token punctuation">(</span>self<span class="token punctuation">.</span>root<span class="token punctuation">,</span>nd<span class="token punctuation">,</span>self<span class="token punctuation">.</span>root<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> prt <span class="token keyword">is</span> None <span class="token operator">or</span> prt<span class="token operator">==</span>nd<span class="token punctuation">:</span><span class="token keyword">return</span> prt
+        <span class="token keyword">elif</span> prt<span class="token punctuation">.</span>left<span class="token operator">==</span>nd<span class="token punctuation">:</span><span class="token keyword">return</span> prt<span class="token punctuation">.</span>left
+        <span class="token keyword">else</span><span class="token punctuation">:</span><span class="token keyword">return</span> prt<span class="token punctuation">.</span>right
+    <span class="token keyword">def</span> <span class="token function">_findPrt</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>root<span class="token punctuation">,</span>nd<span class="token punctuation">,</span>parent<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token operator">not</span> isinstance<span class="token punctuation">(</span>nd<span class="token punctuation">,</span>node<span class="token punctuation">)</span><span class="token punctuation">:</span>nd <span class="token operator">=</span> node<span class="token punctuation">(</span>nd<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> root <span class="token keyword">is</span> None <span class="token operator">or</span> root<span class="token operator">&lt;</span>nd<span class="token punctuation">:</span><span class="token keyword">return</span> None
+        <span class="token keyword">if</span> root<span class="token operator">==</span>nd<span class="token punctuation">:</span><span class="token keyword">return</span> parent
+        l<span class="token operator">=</span>self<span class="token punctuation">.</span>_findPrt<span class="token punctuation">(</span>root<span class="token punctuation">.</span>left<span class="token punctuation">,</span>nd<span class="token punctuation">,</span>root<span class="token punctuation">)</span>
+        <span class="token keyword">return</span>  l <span class="token keyword">if</span> l <span class="token keyword">is</span> <span class="token operator">not</span> None <span class="token keyword">else</span> self<span class="token punctuation">.</span>_findPrt<span class="token punctuation">(</span>root<span class="token punctuation">.</span>right<span class="token punctuation">,</span>nd<span class="token punctuation">,</span>root<span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">getTop</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>root
+    <span class="token keyword">def</span> <span class="token function">pop</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        nd <span class="token operator">=</span> self<span class="token punctuation">.</span>root
+        self<span class="token punctuation">.</span>remove<span class="token punctuation">(</span>self<span class="token punctuation">.</span>root<span class="token punctuation">.</span>val<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> nd
+    <span class="token keyword">def</span> <span class="token function">levelTraverse</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        li <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>root<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+        cur<span class="token operator">=</span><span class="token number">0</span>
+        <span class="token keyword">while</span> li<span class="token punctuation">:</span>
+            nd<span class="token punctuation">,</span>lv <span class="token operator">=</span> li<span class="token punctuation">.</span>pop<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span> cur<span class="token operator">&lt;</span>lv<span class="token punctuation">:</span>
+                cur<span class="token operator">=</span>lv
+                <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span>nd<span class="token punctuation">,</span>end<span class="token operator">=</span><span class="token string">' '</span><span class="token punctuation">)</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span><span class="token keyword">print</span><span class="token punctuation">(</span>nd<span class="token punctuation">,</span>end<span class="token operator">=</span><span class="token string">' '</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span> nd<span class="token punctuation">.</span>left <span class="token keyword">is</span> <span class="token operator">not</span> None<span class="token punctuation">:</span>li<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">(</span>nd<span class="token punctuation">.</span>left<span class="token punctuation">,</span>lv<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span> nd<span class="token punctuation">.</span>right <span class="token keyword">is</span> <span class="token operator">not</span> None<span class="token punctuation">:</span>li<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">(</span>nd<span class="token punctuation">.</span>right<span class="token punctuation">,</span>lv<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">ronghao_xu</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://www.xrh.asia/posts/c400.html">https://www.xrh.asia/posts/c400.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">ronghao_xu</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+                                    <span class="chip bg-color">数据结构</span>
+                                </a>
+                            
+                                <a href="/tags/%E6%A0%91/">
+                                    <span class="chip bg-color">树</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/posts/c400.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="『数据结构』树">
+                        
+                        <span class="card-title">『数据结构』树</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+
+
+1. 概念
+2. 二叉查找树
+2.1. 随机构造的二叉查找树
+2.2. 平均结点深度
+2.3. 不同的二叉树数目(Catalan num)
+2.4. 好括号列
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-21
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="post-category">
+                                    数据结构与算法
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+                        <span class="chip bg-color">数据结构</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%A0%91/">
+                        <span class="chip bg-color">树</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/posts/3a14.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="算法设计与分析彭攀链接">
+                        
+                        <span class="card-title">算法设计与分析彭攀链接</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-12
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            ronghao_xu
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E4%B8%AD%E7%A7%91%E5%A4%A7%E8%AF%BE%E7%A8%8B%E9%93%BE%E6%8E%A5/">
+                        <span class="chip bg-color">中科大课程链接</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2023</span>
+            
+            <a href="/about" target="_blank">ronghao_xu</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            <br>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/ronghao233" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:ronghao_xu@mail.ustc.edu.cn" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1300476195" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1300476195" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+    
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618},"display":{"superSample":2,"width":150,"height":300,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":"0.2s"},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>
